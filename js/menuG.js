@@ -25,6 +25,8 @@ class menuG extends Phaser.Scene {
 
         this.load.image('wand', './assets/images/wand.png')
 
+        this.load.image('pick_icon', './assets/images/pickicon.png')
+
     }
 
     create() {
@@ -55,27 +57,21 @@ class menuG extends Phaser.Scene {
                 frames: [0,1,2]
             }) 
         })
+        this.anims.create({
+            key: 'upWalk',
+            frameRate: 4,
+            repeat: -1, // forever
+            frames: this.anims.generateFrameNumbers('cat', {
+                frames: [3,4,5]
+            }) 
+        })
         
         this.sound.play('menu_music', {
             loop: true
         })
 
-
-        // this will add a event listener on "D"
-        // this.input.keyboard.on('keyup_D', function(event) {
-        //     this.image.x += 10;
-        // }, this);
-
-
         // this one is different, makes an event which will be listened to on update
         // this.key_A = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
-        
-
-        // this code listens for the pointer and does whatever
-        // this.input.on('pointerdown', function(event) {
-        //     this.image.x = event.x;
-        //     this.image.y = event.y;
-        // }, this);
 
         // event listeners for keyboard
         // this.input.keyboard.on('keyup', function(event) {
@@ -96,36 +92,22 @@ class menuG extends Phaser.Scene {
             hoverSprite.setVisible(false)
         })
         newButton.on('pointerdown', () => {
-            console.log('NEW')
 
             let username = prompt('What is your name?')
 
             if (username) {
-                newButton.setVisible(false)
-                continueButton.setVisible(false)
-                
-
-                ////
-                //// choose class, archer, mage, knight 
-                ////
-
-                let axeIcon = this.add.image (this.game.renderer.width * 0.30, this.game.renderer.height * 0.50, 'axe').setDepth(1)
-                axeIcon.setScale(0.2, 0.2)
-
-                let bowIcon = this.add.image (this.game.renderer.width * 0.45, this.game.renderer.height * 0.50, 'bow').setDepth(1)
-                bowIcon.setScale(0.2, 0.2)
-
-                let wandIcon = this.add.image (this.game.renderer.width * 0.60, this.game.renderer.height * 0.50, 'wand').setDepth(1)
-                wandIcon.setScale(0.2, 0.2)
+                chooseNewClass()
+                ///
+                /// collect all the new character 
+                /// info into a hash and pass it to fetch
                 ///
                 /// fetch, + change scene 
+                ///
                 ///
 
 
             }
-            
-
-        })
+        }, this)
 
         continueButton.setInteractive();
         continueButton.on('pointerover', () => {
@@ -138,12 +120,13 @@ class menuG extends Phaser.Scene {
             hoverSprite.setVisible(false)   
         })
         continueButton.on('pointerdown', () => {
-            console.log('CONT.')
 
-            // continueButton.setVisible(false)
-            // newButton.setVisible(false)
+            let continuePrompt = prompt('What was the name on savefile?')
 
-        })
+            if (continuePrompt) {
+                continueScreen1()
+            }
+        }, this)
     }
 
     update(delta) {
@@ -159,5 +142,44 @@ class menuG extends Phaser.Scene {
 
     }
 
-    
+    //////helper functions? 
+
+    chooseNewClass() {
+        newButton.setVisible(false)
+        continueButton.setVisible(false)
+        
+        let pickIcon = this.add.image (this.game.renderer.width * 0.50, this.game.renderer.height * 0.30, 'pick_icon').setDepth(1)
+
+        let axeIcon = this.add.image (this.game.renderer.width * 0.30, this.game.renderer.height * 0.50, 'axe').setDepth(1).setScale(0.2, 0.2).setInteractive()
+        axeIcon.on('pointerover', () => {
+            hoverSprite.setVisible(true)
+            hoverSprite.play('upWalk')
+            hoverSprite.x = this.game.renderer.width * 0.30;
+            hoverSprite.y = this.game.renderer.height * 0.65;
+
+        }, this)
+
+        let bowIcon = this.add.image (this.game.renderer.width * 0.45, this.game.renderer.height * 0.50, 'bow').setDepth(1).setScale(0.2, 0.2).setInteractive()
+        bowIcon.on('pointerover', () => {
+            hoverSprite.setVisible(true)
+            hoverSprite.play('upWalk')
+            hoverSprite.x = this.game.renderer.width * 0.45;
+            hoverSprite.y = this.game.renderer.height * 0.65;
+
+        }, this)
+
+        let wandIcon = this.add.image (this.game.renderer.width * 0.60, this.game.renderer.height * 0.50, 'wand').setDepth(1).setScale(0.2, 0.2).setInteractive()
+        wandIcon.on('pointerover', () => {
+            hoverSprite.setVisible(true)
+            hoverSprite.play('upWalk')
+            hoverSprite.x = this.game.renderer.width * 0.60;
+            hoverSprite.y = this.game.renderer.height * 0.65;
+        }, this)
+    }
+
+    continueScreen1() {
+        newButton.setVisible(false)
+        continueButton.setVisible(false)
+
+    }
 }
