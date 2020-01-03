@@ -1,7 +1,12 @@
-class menuG extends Phaser.Scene {
+// import { CST } from '../CST';
+
+class MenuScene extends Phaser.Scene {
     constructor() {
         // now the mian.js file can call this scene by name
-        super({key:'menuG'});
+        super({
+            // key: CST.SCENES.MENU
+            key: "MENU"
+        });
 
     }
     
@@ -190,7 +195,9 @@ class menuG extends Phaser.Scene {
                     .then(r => r.json())
                     .then((response) => {
                         // console.log(response)
-                        console.log(response.id)
+    
+                        this.scene.start("MAP", response)
+
                     })
                 })
         
@@ -229,8 +236,11 @@ class menuG extends Phaser.Scene {
                     .then(r => r.json())
                     .then((response) => {
                         // console.log(response)
-                        console.log(response.id)
+                        // console.log(response.id)
+                        this.scene.start("MAP", response)
+
                     })
+
                 })
         
                 let wandIcon = this.add.image (this.game.renderer.width * 0.60, this.game.renderer.height * 0.50, 'wand').setDepth(1).setScale(0.2, 0.2).setInteractive()
@@ -265,7 +275,9 @@ class menuG extends Phaser.Scene {
                     .then(r => r.json())
                     .then((response) => {
                         // console.log(response)
-                        console.log(response.id)
+                        // console.log(response.id)
+                        this.scene.start("MAP", response)
+
                     })
                 })
 
