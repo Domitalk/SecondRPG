@@ -12,11 +12,19 @@ class MapScene extends Phaser.Scene {
     }
     preload(){
         // assets
+
         this.load.spritesheet("walking2424", './assets/images/walking2424.png', {frameHeight: 24, frameWidth: 24})
-        this.load.image('terrain', './assets/maps/terrain.png')
-        this.load.tilemapTiledJSON('mappy', './assets/maps/mappy3.json')
+        
+        this.load.image('tiles', './assets/maps/[Base]BaseChip_pipo.png')
+        this.load.tilemapTiledJSON('mappy', './assets/maps/map.json')
+
+        this.load.spritesheet('enemy', './assets/images/enemy.png', {frameHeight:16, frameWidth: 16})
+
+        
     }
-    create(){
+    create() {
+
+
         //game objects
         this.anims.create({
             key: "walkUp",
@@ -24,8 +32,7 @@ class MapScene extends Phaser.Scene {
                 start: 0, 
                 end: 3
             }),
-            frameRate: 10,
-            repeat: 1
+            frameRate: 10
         })
         this.anims.create({
             key: "walkDown",
@@ -33,8 +40,7 @@ class MapScene extends Phaser.Scene {
                 start: 4, 
                 end: 7
             }),
-            frameRate: 10,
-            repeat: 1
+            frameRate: 10
         })
         this.anims.create({
             key: "walkRight",
@@ -42,8 +48,7 @@ class MapScene extends Phaser.Scene {
                 start: 8, 
                 end: 11
             }),
-            frameRate: 10,
-            repeat: 1
+            frameRate: 10
         })
         this.anims.create({
             key: "walkLeft",
@@ -51,25 +56,50 @@ class MapScene extends Phaser.Scene {
                 start: 12, 
                 end: 15
             }),
-            frameRate: 10,
-            repeat: 1
+            frameRate: 10
         })
 
-        this.sprite1 = Phaser.GameObjects.Sprite = this.physics.add.sprite(this.game.renderer.height * 0.05, this.game.renderer.width * 0.95, 'walking2424').setDepth(1)
+        this.sprite1 = this.physics.add.sprite(this.game.renderer.height * 0.05, this.game.renderer.width * 0.95, 'walking2424').setDepth(1)
         // sprite1.play('walkRight')
 
-        this.sprite1.setScale(1.3)
+        this.enemy1 = this.physics.add.sprite(this.game.renderer.height * .05, this.game.renderer.width * 0.85, 'enemy', 0)
+        // this.sprite1.setScale(2)
         // this.sprite1 = sprite1
+        this.sprite1.setCollideWorldBounds(true)
+
 
 
         let mappy = this.add.tilemap("mappy");
 
-        let terrain = mappy.addTilesetImage('grass_biome', 'terrain')
+        let tileset = mappy.addTilesetImage('[Base]BaseChip_pipo',  'tiles')
 
-        let botLayer = mappy.createStaticLayer('Tile Layer 1', [terrain], 0, 0)
-        // let asdf = mappy.createStaticLayer('Tile Layer 2', [terrain], 0, 0)
+        let layerOne = mappy.createStaticLayer('Tile Layer 1', [tileset], 0, 0).setDepth(-1)
+        let layerTwo = mappy.createStaticLayer('Tile Layer 2', [tileset], 0, 0) .setDepth(1)
+        this.layerTwo = layerTwo
+
 
         this.keyboard = this.input.keyboard.addKeys("W, A, S, D")
+
+        // // map collisions
+        // this.physics.add.collider(this.sprite1, layerTwo)
+        // layerTwo.setCollisionByProperty({collides:true})
+
+
+        this.layerTwo.setCollisionBetween(1, 50);
+        this.physics.add.collider(this.sprite1, this.layerTwo)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

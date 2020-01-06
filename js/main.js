@@ -6,8 +6,8 @@
 
 let config = {
     type:Phaser.CANVAS,
-    width:600,
-    height:600,
+    width:704,
+    height:704,
     physics: {
         default:'arcade',
         arcade: {

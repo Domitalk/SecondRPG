@@ -44,7 +44,7 @@ class MenuScene extends Phaser.Scene {
 
     create() {
         // now actually use those assets 
-        this.add.image(0,0,'background').setOrigin(0).setDepth(0);
+        this.add.image(0,0,'background').setOrigin(0).setDepth(0).setScale(1.2);
 
         let newButton = this.add.image (this.game.renderer.width / 2, this.game.renderer.height * 0.50, 'new_button').setDepth(1)
         let continueButton = this.add.image (this.game.renderer.width /2, this.game.renderer.height * 0.60, 'continue_button').setDepth(1)
