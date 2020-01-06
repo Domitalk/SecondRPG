@@ -18,7 +18,7 @@ class MapScene extends Phaser.Scene {
         this.load.image('tiles', './assets/maps/[Base]BaseChip_pipo.png')
         this.load.tilemapTiledJSON('mappy', './assets/maps/map.json')
 
-        this.load.spritesheet('enemy', './assets/images/enemy.png', {frameHeight:16, frameWidth: 16})
+        this.load.spritesheet('enemy', './assets/images/orig-red_cap-NESW.png', {frameHeight:32, frameWidth: 24})
 
         
     }
@@ -58,12 +58,23 @@ class MapScene extends Phaser.Scene {
             }),
             frameRate: 10
         })
+        this.anims.create({
+            key: 'enemy1', 
+            frames: this.anims.generateFrameNumbers('enemy', {
+                start: 6,
+                end: 8
+            }),
+            frameRate: 1
+        })
 
         this.sprite1 = this.physics.add.sprite(this.game.renderer.height * 0.05, this.game.renderer.width * 0.95, 'walking2424').setDepth(1)
         // sprite1.play('walkRight')
 
-        this.enemy1 = this.physics.add.sprite(this.game.renderer.height * .05, this.game.renderer.width * 0.85, 'enemy', 0)
+        this.enemy1 = this.physics.add.sprite(this.game.renderer.height * .94, this.game.renderer.width * 0.89, 'enemy').setDepth(1)
+        this.enemy1.setImmovable(true)
+        
         // this.sprite1.setScale(2)
+
         // this.sprite1 = sprite1
         this.sprite1.setCollideWorldBounds(true)
 
@@ -89,7 +100,7 @@ class MapScene extends Phaser.Scene {
         this.physics.add.collider(this.sprite1, this.layerTwo)
 
 
-
+        this.physics.add.collider(this.sprite1, this.enemy1)
 
 
 
@@ -130,6 +141,7 @@ class MapScene extends Phaser.Scene {
             this.sprite1.setVelocityX(0);
             this.sprite1.setVelocityY(0);
         }
+        this.enemy1.play('enemy1', true)
         //updates at 16ms so event listeners on keydown for dynamic movement go here
     }
 
