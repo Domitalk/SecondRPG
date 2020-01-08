@@ -24,7 +24,6 @@ class MapScene extends Phaser.Scene {
     }
     create() {
 
-
         //game objects
         this.anims.create({
             key: "walkUp",
@@ -70,7 +69,7 @@ class MapScene extends Phaser.Scene {
         this.sprite1 = this.physics.add.sprite(this.game.renderer.height * 0.05, this.game.renderer.width * 0.95, 'walking2424').setDepth(1)
         // sprite1.play('walkRight')
 
-        this.enemy1 = this.physics.add.sprite(this.game.renderer.height * .94, this.game.renderer.width * 0.89, 'enemy').setDepth(1)
+        this.enemy1 = this.physics.add.sprite(this.game.renderer.height * .12, this.game.renderer.width * 0.95, 'enemy').setDepth(1)
         this.enemy1.setImmovable(true)
         
         // this.sprite1.setScale(2)
@@ -100,7 +99,8 @@ class MapScene extends Phaser.Scene {
         this.physics.add.collider(this.sprite1, this.layerTwo)
 
 
-        this.physics.add.collider(this.sprite1, this.enemy1)
+        // this.physics.add.collider(this.sprite1, this.enemy1)
+        
 
 
 
@@ -117,6 +117,7 @@ class MapScene extends Phaser.Scene {
 
     }
     update(delta) {
+        this.physics.world.collide(this.sprite1, this.enemy1, this.firstEncounter)
         // this.physics.world.collide(this.sprite1, this.other_sprites, (this.sprite1, this.other_sprites)=>{
         //     DO SOMETHING ON COLLISON
         // })
@@ -143,6 +144,12 @@ class MapScene extends Phaser.Scene {
         }
         this.enemy1.play('enemy1', true)
         //updates at 16ms so event listeners on keydown for dynamic movement go here
+
+        
+    }
+    firstEncounter = () => {
+
+
     }
 
 }

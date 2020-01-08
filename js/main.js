@@ -17,7 +17,7 @@ let config = {
 
     // this loads the other js files so add mapG and battleG later
     
-    scene: [ 
+    scene: [
         MenuScene, 
         MapScene
     ],
@@ -28,5 +28,4 @@ let config = {
 };
 
 let game = new Phaser.Game(config);
-
 
